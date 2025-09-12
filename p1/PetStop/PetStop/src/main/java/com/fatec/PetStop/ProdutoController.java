@@ -1,6 +1,7 @@
 package com.fatec.PetStop;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,29 +27,35 @@ public class ProdutoController {
 
     @GetMapping("/api/produto/{codigo}")
     public Produto carregar(@PathVariable("codigo") int c){
-        if(bd.existsById(c)){
-            return bd.findById(c).get();    
+        Optional<Produto> opt = bd.findById(c);
+        if(opt.isPresent()){
+            System.out.println("Produto encontrado!");
+            return bd.findById(c).get();
         } else {
+            System.out.println("Produto nao existe!");
             return new Produto();
         }
     }
     
     @PutMapping("/api/produto")
     public void alterar(@RequestBody Produto obj){
-        if(bd.existsById(obj.getCodigo())){
+        Optional<Produto> opt = bd.findById(obj.getCodigo());
+        if(opt.isPresent()){
             bd.save(obj);
-            System.out.println("Produto alterado com sucesso!");
-        }
-        else{
-            System.out.println("Nao existe um produto com esse codigo!");
+            System.out.println("Produto alterado com sucesso");
+        } else {
+            System.out.println("Produto nao existe!");
         }
     }
 
     @DeleteMapping("/api/produto/{codigo}")
     public void remover(@PathVariable("codigo") int codigo){
-        if(bd.existsById(codigo)){
+        Optional<Produto> opt = bd.findById(codigo);
+        if(opt.isPresent()){
             bd.deleteById(codigo);
             System.out.println("Produto removido com sucesso!");
+        } else {
+            System.out.println("Produto nao existe!");
         }
     }
 
