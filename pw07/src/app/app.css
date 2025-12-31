@@ -1,0 +1,12 @@
+h1{
+    text-align: left;
+    color: blue;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 50px;
+}
+
+table {
+    margin: auto;
+    width: 50%;
+    border: 1px solid black;
+}
